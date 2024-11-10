@@ -79,5 +79,12 @@ public class MenuButton {
     mousePressed = false; 
   }
 
+  public boolean isMousePresed() {
+    return mousePressed;
+  }
+
+  public Rectangle getBounds(){
+    return bounds;
+  }
 
 }
