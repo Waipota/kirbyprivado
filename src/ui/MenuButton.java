@@ -14,6 +14,7 @@ public class MenuButton {
   private BufferedImage[] imgs;
   private boolean mouseOver, mousePressed;
   private Rectangle bounds;
+  
   public MenuButton(int xpos, int ypos, int row, GameState state) {
     this.xpos = xpos;
     this.ypos = ypos;

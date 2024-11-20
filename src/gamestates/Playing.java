@@ -7,10 +7,14 @@ import java.awt.event.MouseEvent;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import ui.PauseOverlay;
+
 
 public class Playing extends State implements StateMethods {
 	private Player player;
 	private LevelManager levelManager;
+  private PauseOverlay pausedOverlay;
+	private boolean paused = false;
 
 	public Playing(Game game) {
 		super(game);
@@ -21,14 +25,17 @@ public class Playing extends State implements StateMethods {
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-
+		pausedOverlay = new PauseOverlay(this);
 	}
 
 	@Override
 	public void update() {
-		levelManager.update();
-		player.update();
-
+		if (!paused) {
+			levelManager.update();
+			player.update();
+		} else {
+			pausedOverlay.update();
+		}
 	}
 
 	@Override
@@ -36,6 +43,8 @@ public class Playing extends State implements StateMethods {
 		levelManager.draw(g);
 		player.render(g);
 
+		if (paused)
+			pausedOverlay.draw(g);
 	}
 
 	@Override
@@ -56,8 +65,8 @@ public class Playing extends State implements StateMethods {
 		case KeyEvent.VK_SPACE:
 			player.setJump(true);
 			break;
-		case KeyEvent.VK_BACK_SPACE:
-			GameState.state = GameState.MENU;
+		case KeyEvent.VK_ESCAPE:
+			paused = !paused;
 			break;
 		}
 	}
@@ -78,22 +87,34 @@ public class Playing extends State implements StateMethods {
 
 	}
 
+	public void mouseDragged(MouseEvent e) {
+		if (paused)
+			pausedOverlay.mouseDragged(e);
+	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pausedOverlay.mousePressed(e);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pausedOverlay.mouseReleased(e);
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (paused)
+			pausedOverlay.mouseMoved(e);
 
+	}
+
+	public void unpauseGame() {
+		paused = false;
 	}
 
 	public void windowFocusLost() {
