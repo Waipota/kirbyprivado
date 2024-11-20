@@ -9,11 +9,10 @@ import levels.LevelManager;
 import main.Game;
 import ui.PauseOverlay;
 
-
 public class Playing extends State implements StateMethods {
 	private Player player;
 	private LevelManager levelManager;
-  private PauseOverlay pausedOverlay;
+	private PauseOverlay pauseOverlay;
 	private boolean paused = false;
 
 	public Playing(Game game) {
@@ -25,7 +24,7 @@ public class Playing extends State implements StateMethods {
 		levelManager = new LevelManager(game);
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE));
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		pausedOverlay = new PauseOverlay(this);
+		pauseOverlay = new PauseOverlay(this);
 	}
 
 	@Override
@@ -34,7 +33,7 @@ public class Playing extends State implements StateMethods {
 			levelManager.update();
 			player.update();
 		} else {
-			pausedOverlay.update();
+			pauseOverlay.update();
 		}
 	}
 
@@ -44,7 +43,7 @@ public class Playing extends State implements StateMethods {
 		player.render(g);
 
 		if (paused)
-			pausedOverlay.draw(g);
+			pauseOverlay.draw(g);
 	}
 
 	@Override
@@ -89,27 +88,27 @@ public class Playing extends State implements StateMethods {
 
 	public void mouseDragged(MouseEvent e) {
 		if (paused)
-			pausedOverlay.mouseDragged(e);
+			pauseOverlay.mouseDragged(e);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (paused)
-			pausedOverlay.mousePressed(e);
+			pauseOverlay.mousePressed(e);
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (paused)
-			pausedOverlay.mouseReleased(e);
+			pauseOverlay.mouseReleased(e);
 
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if (paused)
-			pausedOverlay.mouseMoved(e);
+			pauseOverlay.mouseMoved(e);
 
 	}
 

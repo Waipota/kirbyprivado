@@ -24,6 +24,17 @@ public class Constants {
     public static final int URM_DEFAULT_SIZE = 56;
     public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE * Game.SCALE);
   }
+
+  public static class VolumeButtons{
+    public static final int VOLUME_DEFAULT_WIDHT = 28;
+    public static final int VOLUME_DEFAULT_HEIGHT = 44;
+    public static final int SLIDER_DEFAULT_WIDHT = 215;
+
+    public static final int VOLUME_WIDHT = (int) (VOLUME_DEFAULT_WIDHT * Game.SCALE);
+    public static final int VOLUME_HEIGHT = (int) (VOLUME_DEFAULT_HEIGHT * Game.SCALE);
+    public static final int SLIDER_WIDHT = (int)(SLIDER_DEFAULT_WIDHT * Game.SCALE);
+
+  }
   }
 
 
