@@ -15,13 +15,13 @@ public class VolumeButton extends PauseButton {
 	private int buttonX, minX, maxX;
 
 	public VolumeButton(int x, int y, int width, int height) {
-		super(x + width / 2, y, VOLUME_WIDHT, height);
-		bounds.x -= VOLUME_WIDHT / 2;
+		super(x + width / 2, y, VOLUME_WIDTH , height);
+		bounds.x -= VOLUME_WIDTH / 2;
 		buttonX = x + width / 2;
 		this.x = x;
 		this.width = width;
-		minX = x + VOLUME_WIDHT / 2;
-		maxX = x + width - VOLUME_WIDHT / 2;
+		minX = x + VOLUME_WIDTH  / 2;
+		maxX = x + width - VOLUME_WIDTH / 2;
 		loadImgs();
 	}
 
@@ -29,9 +29,9 @@ public class VolumeButton extends PauseButton {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.VOLUME_BUTTONS);
 		imgs = new BufferedImage[3];
 		for (int i = 0; i < imgs.length; i++)
-			imgs[i] = temp.getSubimage(i * VOLUME_DEFAULT_WIDHT, 0, VOLUME_DEFAULT_WIDHT, VOLUME_DEFAULT_HEIGHT);
+			imgs[i] = temp.getSubimage(i * VOLUME_DEFAULT_WIDTH, 0, VOLUME_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
 
-		slider = temp.getSubimage(3 * VOLUME_DEFAULT_WIDHT, 0, SLIDER_DEFAULT_WIDHT, VOLUME_DEFAULT_HEIGHT);
+		slider = temp.getSubimage(3 * VOLUME_DEFAULT_WIDTH, 0, SLIDER_DEFAULT_WIDTH, VOLUME_DEFAULT_HEIGHT);
 		
 	}
 
@@ -47,7 +47,7 @@ public class VolumeButton extends PauseButton {
 	public void draw(Graphics g) {
 
 		g.drawImage(slider, x, y, width, height, null);
-		g.drawImage(imgs[index], buttonX - VOLUME_WIDHT / 2, y, VOLUME_WIDHT, height, null);
+		g.drawImage(imgs[index], buttonX - VOLUME_WIDTH / 2, y, VOLUME_WIDTH, height, null);
 
 	}
 
@@ -59,7 +59,7 @@ public class VolumeButton extends PauseButton {
 		else
 			buttonX = x;
 
-		bounds.x = buttonX - VOLUME_WIDHT / 2;
+		bounds.x = buttonX - VOLUME_WIDTH / 2;
 
 	}
 
