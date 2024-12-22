@@ -12,6 +12,7 @@ import entities.EnemyManager;
 import entities.Player;
 import levels.LevelManager;
 import main.Game;
+import objects.ObjectManager;
 import ui.GameOverOverlay;
 import ui.LevelCompletedOverlay;
 import ui.PauseOverlay;
@@ -27,6 +28,7 @@ public class Playing extends State implements StateMethods {
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
 
+	private ObjectManager objectManager;
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
 	private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
@@ -71,6 +73,7 @@ public class Playing extends State implements StateMethods {
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
+		objectManager = new ObjectManager(this);
 
 		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
@@ -79,6 +82,7 @@ public class Playing extends State implements StateMethods {
 		pauseOverlay = new PauseOverlay(this);
 		gameOverOverlay = new GameOverOverlay(this);
 		levelCompletedOverlay = new LevelCompletedOverlay(this);
+
 	}
 
 	@Override
@@ -89,6 +93,7 @@ public class Playing extends State implements StateMethods {
 			levelCompletedOverlay.update();
 		} else if (!gameOver) {
 			levelManager.update();
+			objectManager.update();
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
@@ -119,6 +124,8 @@ public class Playing extends State implements StateMethods {
 		levelManager.draw(g, xLvlOffset);
 		player.render(g, xLvlOffset);
 		enemyManager.draw(g, xLvlOffset);
+		objectManager.draw(g, xLvlOffset);
+
 
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
@@ -265,4 +272,8 @@ public class Playing extends State implements StateMethods {
 		return enemyManager;
 	}
 
+	public ObjectManager getObjectManager() {
+		return objectManager;
+
+	}
 }
