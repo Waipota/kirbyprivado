@@ -29,9 +29,14 @@ public class LoadSave {
 
     public static BufferedImage GetSpriteAtlas(String fileName) {
         BufferedImage img = null;
-        InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
+        InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);;
+        if (is == null){
+            System.out.println("El archivo no se esta encontrando");
+        }
+
         try {
             img = ImageIO.read(is);
+            System.out.println();
 
         } catch (IOException e) {
             e.printStackTrace();
