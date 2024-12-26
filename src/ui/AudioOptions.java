@@ -1,27 +1,32 @@
 package ui;
 
-import gamestates.GameState;
-import main.Game;
-
-import java.awt.*;
-import java.awt.event.MouseEvent;
-
 import static utilz.Constants.UI.PauseButtons.SOUND_SIZE;
 import static utilz.Constants.UI.VolumeButtons.SLIDER_WIDTH;
 import static utilz.Constants.UI.VolumeButtons.VOLUME_HEIGHT;
 
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+
+import main.Game;
+
 public class AudioOptions {
+
     private VolumeButton volumeButton;
     private SoundButton musicButton, sfxButton;
+
     private Game game;
 
-
-    public AudioOptions(Game game){
+    public AudioOptions(Game game) {
         this.game = game;
         createSoundButtons();
         createVolumeButton();
     }
 
+    private void createVolumeButton() {
+        int vX = (int) (309 * Game.SCALE);
+        int vY = (int) (278 * Game.SCALE);
+        volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
+    }
 
     private void createSoundButtons() {
         int soundX = (int) (450 * Game.SCALE);
@@ -31,24 +36,20 @@ public class AudioOptions {
         sfxButton = new SoundButton(soundX, sfxY, SOUND_SIZE, SOUND_SIZE);
     }
 
-    private void createVolumeButton() {
-        int vX = (int) (309 * Game.SCALE);
-        int vY = (int) (278 * Game.SCALE);
-        volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
-    }
-
-    public void update(){
+    public void update() {
         musicButton.update();
         sfxButton.update();
-        volumeButton.update();
 
+        volumeButton.update();
     }
 
-    public void draw(Graphics g){
-        volumeButton.draw(g);
+    public void draw(Graphics g) {
+        // Sound buttons
         musicButton.draw(g);
         sfxButton.draw(g);
 
+        // Volume Button
+        volumeButton.draw(g);
     }
 
     public void mouseDragged(MouseEvent e) {
@@ -56,9 +57,8 @@ public class AudioOptions {
             float valueBefore = volumeButton.getFloatValue();
             volumeButton.changeX(e.getX());
             float valueAfter = volumeButton.getFloatValue();
-            if (valueBefore != valueAfter){
+            if (valueBefore != valueAfter)
                 game.getAudioPlayer().setVolume(valueAfter);
-            }
         }
     }
 
@@ -87,12 +87,14 @@ public class AudioOptions {
 
         musicButton.resetBools();
         sfxButton.resetBools();
+
         volumeButton.resetBools();
     }
 
     public void mouseMoved(MouseEvent e) {
         musicButton.setMouseOver(false);
         sfxButton.setMouseOver(false);
+
         volumeButton.setMouseOver(false);
 
         if (isIn(e, musicButton))
@@ -106,6 +108,5 @@ public class AudioOptions {
     private boolean isIn(MouseEvent e, PauseButton b) {
         return b.getBounds().contains(e.getX(), e.getY());
     }
-
 
 }

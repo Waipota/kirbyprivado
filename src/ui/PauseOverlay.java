@@ -8,9 +8,7 @@ import gamestates.GameState;
 import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
-import static utilz.Constants.UI.PauseButtons.*;
 import static utilz.Constants.UI.URMButtons.*;
-import static utilz.Constants.UI.VolumeButtons.*;
 
 public class PauseOverlay {
 
@@ -19,20 +17,12 @@ public class PauseOverlay {
 	private int bgX, bgY, bgW, bgH;
 	private AudioOptions audioOptions;
 	private UrmButton menuB, replayB, unpauseB;
-	private VolumeButton volumeButton;
 
 	public PauseOverlay(Playing playing) {
 		this.playing = playing;
 		loadBackground();
 		audioOptions = playing.getGame().getAudioOptions();
 		createUrmButtons();
-
-	}
-
-	private void createVolumeButton() {
-		int vX = (int) (309 * Game.SCALE);
-		int vY = (int) (278 * Game.SCALE);
-		volumeButton = new VolumeButton(vX, vY, SLIDER_WIDTH, VOLUME_HEIGHT);
 	}
 
 	private void createUrmButtons() {
@@ -45,7 +35,6 @@ public class PauseOverlay {
 		replayB = new UrmButton(replayX, bY, URM_SIZE, URM_SIZE, 1);
 		unpauseB = new UrmButton(unpauseX, bY, URM_SIZE, URM_SIZE, 0);
 	}
-
 
 	private void loadBackground() {
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACKGROUND);
@@ -60,19 +49,22 @@ public class PauseOverlay {
 		menuB.update();
 		replayB.update();
 		unpauseB.update();
+
 		audioOptions.update();
+
 	}
 
 	public void draw(Graphics g) {
 		// Background
 		g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
 
-
 		// UrmButtons
 		menuB.draw(g);
 		replayB.draw(g);
 		unpauseB.draw(g);
+
 		audioOptions.draw(g);
+
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -86,15 +78,15 @@ public class PauseOverlay {
 			replayB.setMousePressed(true);
 		else if (isIn(e, unpauseB))
 			unpauseB.setMousePressed(true);
-		else {
+		else
 			audioOptions.mousePressed(e);
-		}
 	}
 
 	public void mouseReleased(MouseEvent e) {
 		if (isIn(e, menuB)) {
 			if (menuB.getMousePressed()) {
-				GameState.state = GameState.MENU;
+				playing.resetAll();
+				playing.setGamestate(GameState.MENU);
 				playing.unpauseGame();
 			}
 		} else if (isIn(e, replayB)) {
@@ -105,14 +97,13 @@ public class PauseOverlay {
 		} else if (isIn(e, unpauseB)) {
 			if (unpauseB.getMousePressed())
 				playing.unpauseGame();
-		}
-		else {
+		} else
 			audioOptions.mouseReleased(e);
-		}
 
 		menuB.resetBools();
 		replayB.resetBools();
 		unpauseB.resetBools();
+
 	}
 
 	public void mouseMoved(MouseEvent e) {
@@ -120,17 +111,14 @@ public class PauseOverlay {
 		replayB.setMouseOver(false);
 		unpauseB.setMouseOver(false);
 
-
-
 		if (isIn(e, menuB))
 			menuB.setMouseOver(true);
 		else if (isIn(e, replayB))
 			replayB.setMouseOver(true);
 		else if (isIn(e, unpauseB))
 			unpauseB.setMouseOver(true);
-		else {
+		else
 			audioOptions.mouseMoved(e);
-		}
 	}
 
 	private boolean isIn(MouseEvent e, PauseButton b) {

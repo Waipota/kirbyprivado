@@ -1,8 +1,9 @@
 package ui;
 
+import static utilz.Constants.UI.URMButtons.URM_SIZE;
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
@@ -11,48 +12,50 @@ import gamestates.Playing;
 import main.Game;
 import utilz.LoadSave;
 
-import static utilz.Constants.UI.URMButtons.URM_SIZE;
-
 public class GameOverOverlay {
-  private Playing playing; 
+
+  private Playing playing;
   private BufferedImage img;
-  private int imgW, imgH, imgX, imgY;
+  private int imgX, imgY, imgW, imgH;
   private UrmButton menu, play;
-  public GameOverOverlay(Playing playing){
-    this.playing = playing; 
+
+  public GameOverOverlay(Playing playing) {
+    this.playing = playing;
     createImg();
-    createButtuons();
+    createButtons();
   }
 
-
-  private void createButtuons(){
+  private void createButtons() {
     int menuX = (int) (335 * Game.SCALE);
-    int playx = (int) (440 * Game.SCALE);
+    int playX = (int) (440 * Game.SCALE);
     int y = (int) (195 * Game.SCALE);
-    play = new UrmButton(playx, y, URM_SIZE, URM_SIZE, 0);
+    play = new UrmButton(playX, y, URM_SIZE, URM_SIZE, 0);
     menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
+
   }
 
-
-  private void createImg(){
+  private void createImg() {
     img = LoadSave.GetSpriteAtlas(LoadSave.DEATH_SCREEN);
     imgW = (int) (img.getWidth() * Game.SCALE);
     imgH = (int) (img.getHeight() * Game.SCALE);
     imgX = Game.GAME_WIDTH / 2 - imgW / 2;
     imgY = (int) (100 * Game.SCALE);
+
   }
 
-
-  public void draw(Graphics g){
+  public void draw(Graphics g) {
     g.setColor(new Color(0, 0, 0, 200));
     g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+
     g.drawImage(img, imgX, imgY, imgW, imgH, null);
+
     menu.draw(g);
     play.draw(g);
   }
 
-  public void keyPressed(KeyEvent e) {
-
+  public void update() {
+    menu.update();
+    play.update();
   }
 
   private boolean isIn(UrmButton b, MouseEvent e) {
@@ -73,12 +76,12 @@ public class GameOverOverlay {
     if (isIn(menu, e)) {
       if (menu.getMousePressed()) {
         playing.resetAll();
-        playing.setGameState(GameState.MENU);
+        playing.setGamestate(GameState.MENU);
       }
     } else if (isIn(play, e))
       if (play.getMousePressed()) {
         playing.resetAll();
-        playing.getGame().getAudioPlayer().setLevelSong((playing.getLevelManager().getLvlIndex()));
+        playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
       }
 
     menu.resetBools();
@@ -92,10 +95,4 @@ public class GameOverOverlay {
       play.setMousePressed(true);
   }
 
-  public void update(){
-    menu.update();
-    play.update();
-  }
-
 }
-
