@@ -23,12 +23,12 @@ public class Playing extends State implements StateMethods {
 	private Player player;
 	private LevelManager levelManager;
 	private EnemyManager enemyManager;
+	private ObjectManager objectManager;
 	private PauseOverlay pauseOverlay;
 	private GameOverOverlay gameOverOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private boolean paused = false;
 
-	private ObjectManager objectManager;
 	private int xLvlOffset;
 	private int leftBorder = (int) (0.2 * Game.GAME_WIDTH);
 	private int rightBorder = (int) (0.8 * Game.GAME_WIDTH);
@@ -40,6 +40,7 @@ public class Playing extends State implements StateMethods {
 
 	private boolean gameOver;
 	private boolean lvlCompleted;
+	private boolean playerDiying = false;
 
 	public Playing(Game game) {
 		super(game);
@@ -64,6 +65,7 @@ public class Playing extends State implements StateMethods {
 
 	private void loadStartLevel() {
 		enemyManager.loadEnemies(levelManager.getCurrentLevel());
+		objectManager.loadObjects(levelManager.getCurrentLevel());
 	}
 
 	private void calcLvlOffset() {
@@ -82,7 +84,6 @@ public class Playing extends State implements StateMethods {
 		pauseOverlay = new PauseOverlay(this);
 		gameOverOverlay = new GameOverOverlay(this);
 		levelCompletedOverlay = new LevelCompletedOverlay(this);
-
 	}
 
 	@Override
@@ -91,9 +92,16 @@ public class Playing extends State implements StateMethods {
 			pauseOverlay.update();
 		} else if (lvlCompleted) {
 			levelCompletedOverlay.update();
-		} else if (!gameOver) {
+		}
+		else if (gameOver){
+			gameOverOverlay.update();
+		}
+		else if (playerDiying) {
+			player.update();
+		}
+		else {
 			levelManager.update();
-			objectManager.update();
+			objectManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			player.update();
 			enemyManager.update(levelManager.getCurrentLevel().getLevelData(), player);
 			checkCloseToBorder();
@@ -126,7 +134,6 @@ public class Playing extends State implements StateMethods {
 		enemyManager.draw(g, xLvlOffset);
 		objectManager.draw(g, xLvlOffset);
 
-
 		if (paused) {
 			g.setColor(new Color(0, 0, 0, 150));
 			g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
@@ -149,16 +156,30 @@ public class Playing extends State implements StateMethods {
 		gameOver = false;
 		paused = false;
 		lvlCompleted = false;
+		playerDiying = false;
 		player.resetAll();
 		enemyManager.resetAllEnemies();
+		objectManager.resetAllObjects();
 	}
 
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
+	public void checkObjectHit(Rectangle2D.Float attackBox) {
+		objectManager.checkObjectHit(attackBox);
+	}
+
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		enemyManager.checkEnemyHit(attackBox);
+	}
+
+	public void checkPotionTouched(Rectangle2D.Float hitbox) {
+		objectManager.checkObjectTouched(hitbox);
+	}
+
+	public void checkSpikesTouched(Player p) {
+		objectManager.checkSpikesTouched(p);
 	}
 
 	@Override
@@ -205,9 +226,6 @@ public class Playing extends State implements StateMethods {
 				case KeyEvent.VK_SPACE:
 					player.setJump(false);
 					break;
-				case KeyEvent.VK_ENTER:
-					player.setAttacking(false);
-					break;
 			}
 
 	}
@@ -226,6 +244,10 @@ public class Playing extends State implements StateMethods {
 			else if (lvlCompleted)
 				levelCompletedOverlay.mousePressed(e);
 		}
+
+		else {
+			gameOverOverlay.mousePressed(e);
+		}
 	}
 
 	@Override
@@ -236,6 +258,9 @@ public class Playing extends State implements StateMethods {
 			else if (lvlCompleted)
 				levelCompletedOverlay.mouseReleased(e);
 		}
+		else {
+			gameOverOverlay.mouseReleased(e);
+		}
 	}
 
 	@Override
@@ -245,6 +270,9 @@ public class Playing extends State implements StateMethods {
 				pauseOverlay.mouseMoved(e);
 			else if (lvlCompleted)
 				levelCompletedOverlay.mouseMoved(e);
+		}
+		else {
+			gameOverOverlay.mouseMoved(e);
 		}
 	}
 
@@ -274,6 +302,13 @@ public class Playing extends State implements StateMethods {
 
 	public ObjectManager getObjectManager() {
 		return objectManager;
+	}
 
+	public LevelManager getLevelManager() {
+		return levelManager;
+	}
+
+	public void setPlayerDiying(boolean b) {
+		this.playerDiying = b;
 	}
 }
