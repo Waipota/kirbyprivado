@@ -210,8 +210,12 @@ public class Playing extends State implements StateMethods {
 				case KeyEvent.VK_ENTER:
 					player.setAttacking(true);
 					break;
+				case KeyEvent.VK_SHIFT:
+					player.powerAttack();
 			}
 	}
+
+
 
 	@Override
 	public void keyReleased(KeyEvent e) {
