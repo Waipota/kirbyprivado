@@ -355,6 +355,9 @@ public class Playing extends State implements StateMethods {
 				case KeyEvent.VK_ENTER:
 					player.setAttacking(true);
 					break;
+				case KeyEvent.VK_SHIFT:
+					player.powerAttack();
+					break;
 				case KeyEvent.VK_ESCAPE:
 					paused = !paused;
 			}
