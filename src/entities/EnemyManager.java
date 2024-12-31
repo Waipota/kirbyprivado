@@ -1,5 +1,6 @@
 package entities;
 
+//Importamos las librerias y las constantes que se usan en la clase del enemymanager
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -9,21 +10,37 @@ import levels.Level;
 import utilz.LoadSave;
 import static utilz.Constants.EnemyConstants.*;
 
+/**
+ * Comienzo de la clase EnemyManager
+ * @author Santiago
+ */
 public class EnemyManager {
 
     private Playing playing;
     private BufferedImage[][] crabbyArr, pinkstarArr, sharkArr;
     private Level currentLevel;
 
+    /**
+     * Definimos el constructor de la clase EnemyManager
+     * @param playing es el estado de juego
+     */
     public EnemyManager(Playing playing) {
         this.playing = playing;
         loadEnemyImgs();
     }
 
+    /**
+     * Definimos un metodo para setear el nivel y despues cargar los enemigos en el nivel que nos encontremos
+     * @param level es el nivel en el que nos encotramos
+     */
     public void loadEnemies(Level level) {
         this.currentLevel = level;
     }
 
+    /**
+     * Definimos un metodo para actualizar el enemymanager
+     * @param lvlData es la informacion del nivel en el que estamos, cambia dependiendo del nivel en el que estemos
+     */
     public void update(int[][] lvlData) {
         boolean isAnyActive = false;
         for (Crabby c : currentLevel.getCrabs())
@@ -48,12 +65,22 @@ public class EnemyManager {
             playing.setLevelCompleted(true);
     }
 
+    /**
+     * Definimos un metodo dibujar a los enemigos (crabbies, sharks y las estrellas)
+     * @param g es el grafico para poder dibujar
+     * @param xLvlOffset es el offset del nivel
+     */
     public void draw(Graphics g, int xLvlOffset) {
         drawCrabs(g, xLvlOffset);
         drawPinkstars(g, xLvlOffset);
         drawSharks(g, xLvlOffset);
     }
 
+    /**
+     * Definimos un metodo para dibujar los sharks
+     * @param g es el grafico para poder dibujar
+     * @param xLvlOffset es el offset del nivel en el que estemos
+     */
     private void drawSharks(Graphics g, int xLvlOffset) {
         for (Shark s : currentLevel.getSharks())
             if (s.isActive()) {
@@ -64,6 +91,11 @@ public class EnemyManager {
             }
     }
 
+    /**
+     * Definimos un metodo para dibujar las estrellas
+     * @param g es el grafico para poder dibujar
+     * @param xLvlOffset es el offset del nivel
+     */
     private void drawPinkstars(Graphics g, int xLvlOffset) {
         for (Pinkstar p : currentLevel.getPinkstars())
             if (p.isActive()) {
@@ -73,6 +105,11 @@ public class EnemyManager {
             }
     }
 
+    /**
+     * Definimos un metodo para poder dibujar los crabbies
+     * @param g es el grafico para poder dibujar
+     * @param xLvlOffset es el offset del nivel
+     */
     private void drawCrabs(Graphics g, int xLvlOffset) {
         for (Crabby c : currentLevel.getCrabs())
             if (c.isActive()) {
@@ -86,6 +123,10 @@ public class EnemyManager {
 
     }
 
+    /**
+     * Definimos un metodo para checkear si un jugador le golpeo a un enemigo
+     * @param attackBox es el attackbox el enemigo
+     */
     public void checkEnemyHit(Rectangle2D.Float attackBox) {
         for (Crabby c : currentLevel.getCrabs())
             if (c.isActive())
@@ -118,12 +159,24 @@ public class EnemyManager {
             }
     }
 
+    /**
+     * Definimos un metodo para cargar las imagenges de los crabbies, sharks y las estrellitas
+     */
     private void loadEnemyImgs() {
         crabbyArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.CRABBY_SPRITE), 9, 5, CRABBY_WIDTH_DEFAULT, CRABBY_HEIGHT_DEFAULT);
         pinkstarArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.PINKSTAR_ATLAS), 8, 5, PINKSTAR_WIDTH_DEFAULT, PINKSTAR_HEIGHT_DEFAULT);
         sharkArr = getImgArr(LoadSave.GetSpriteAtlas(LoadSave.SHARK_ATLAS), 8, 5, SHARK_WIDTH_DEFAULT, SHARK_HEIGHT_DEFAULT);
     }
 
+    /**
+     * Definimos un metodo para dividir una imagen completa en un arreglo de subimagenes que son los sprites
+     * @param atlas es la imagen completa que vamos a partir
+     * @param xSize es el tamaño que se quiere las subimagenes
+     * @param ySize es el tamaño que se quiere las subimagenes
+     * @param spriteW es el ancho de cada sprite
+     * @param spriteH es el alto de cada sprite
+     * @return el arreglo bidimensional de los sprites
+     */
     private BufferedImage[][] getImgArr(BufferedImage atlas, int xSize, int ySize, int spriteW, int spriteH) {
         BufferedImage[][] tempArr = new BufferedImage[ySize][xSize];
         for (int j = 0; j < tempArr.length; j++)
@@ -132,6 +185,9 @@ public class EnemyManager {
         return tempArr;
     }
 
+    /**
+     * Definimos un metodo para resetear los valores de todos los enemigos
+     */
     public void resetAllEnemies() {
         for (Crabby c : currentLevel.getCrabs())
             c.resetEnemy();

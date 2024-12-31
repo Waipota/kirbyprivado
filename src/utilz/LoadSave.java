@@ -1,5 +1,7 @@
 package utilz;
 
+import entities.PlayerCharacter;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +13,9 @@ import javax.imageio.ImageIO;
 
 public class LoadSave {
 
-    public static final String PLAYER_ATLAS = "player_sprites.png";
+    public static final String PLAYER_PIRATE = "player_pirate.png";
+    public static final String PLAYER_ORC = "player_orc.png";
+    public static final String PLAYER_KIRBY = "player_kirby.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";
@@ -64,6 +68,19 @@ public class LoadSave {
         }
         return img;
     }
+
+    public static BufferedImage[][] loadAnimations(PlayerCharacter playerCharacter) {
+        BufferedImage img = LoadSave.GetSpriteAtlas(playerCharacter.playerAtlas);
+        BufferedImage[][] animations = new BufferedImage[playerCharacter.rowAmount][playerCharacter.colAmount];
+        for (int j = 0; j < animations.length; j++)
+            for (int i = 0; i < animations[j].length; i++)
+                animations[j][i] = img.getSubimage(i * playerCharacter.spriteWidth, j * playerCharacter.spriteHeight, playerCharacter.spriteWidth, playerCharacter.spriteHeight);
+
+
+        return animations;
+
+    }
+
 
     public static BufferedImage[] GetAllLevels() {
         URL url = LoadSave.class.getResource("/lvls");

@@ -1,5 +1,6 @@
 package entities;
 
+//Importamos las librerias y constantes que vamos a usar en la clase de shark
 import static utilz.Constants.Dialogue.*;
 import static utilz.Constants.Directions.LEFT;
 import static utilz.Constants.EnemyConstants.*;
@@ -8,20 +9,39 @@ import static utilz.HelpMethods.IsFloor;
 
 import gamestates.Playing;
 
+/**
+ * Comienzo de la clase shark hija de la clase Enemy
+ * @author Santiago
+ */
 public class Shark extends Enemy {
 
+    /**
+     * Definimos el constructor de la clase shark
+     * @param x las coordenadas en x del shark
+     * @param y las coordenadas en y del shark
+     */
     public Shark(float x, float y) {
         super(x, y, SHARK_WIDTH, SHARK_HEIGHT, SHARK);
         initHitbox(18, 22);
         initAttackBox(20, 20, 20);
     }
 
+    /**
+     * Definimos un metodo para actualizar el shark
+     * @param lvlData es la informacion del nivel en el que este el jugador, cambia dependiendo del nivel
+     * @param playing es el estado de juego
+     */
     public void update(int[][] lvlData, Playing playing) {
         updateBehavior(lvlData, playing);
         updateAnimationTick();
         updateAttackBoxFlip();
     }
 
+    /**
+     * Definimos un metodo para actualizar el comportamiento del shark
+     * @param lvlData es la informacion del nivel en el que esta el jugador, cambia dependiendo del nivel
+     * @param playing es el estado de juego
+     */
     private void updateBehavior(int[][] lvlData, Playing playing) {
         if (firstUpdate)
             firstUpdateCheck(lvlData);
@@ -64,6 +84,11 @@ public class Shark extends Enemy {
         }
     }
 
+    /**
+     * Definimos un metodo para hacer el ataque caracteristico del shark
+     * @param lvlData es la informaicion del nivel en el que esta el jugador, cambia dependiendo del nivel
+     * @param playing es el estado de juego
+     */
     protected void attackMove(int[][] lvlData, Playing playing) {
         float xSpeed = 0;
 

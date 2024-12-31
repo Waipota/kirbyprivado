@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import entities.EnemyManager;
 import entities.Player;
+import entities.PlayerCharacter;
 import levels.LevelManager;
 import main.Game;
 import objects.ObjectManager;
@@ -144,16 +145,19 @@ public class Playing extends State implements StateMethods {
 		enemyManager = new EnemyManager(this);
 		objectManager = new ObjectManager(this);
 
-		player = new Player(200, 200, (int) (64 * Game.SCALE), (int) (40 * Game.SCALE), this);
-		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
-		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
-
 		pauseOverlay = new PauseOverlay(this);
 		gameOverOverlay = new GameOverOverlay(this);
 		levelCompletedOverlay = new LevelCompletedOverlay(this);
 		gameCompletedOverlay = new GameCompletedOverlay(this);
 
 		rain = new Rain();
+	}
+
+	public void setPlayerCharacter(PlayerCharacter pc) {
+		player = new Player(pc, this);
+		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
+		player.setSpawn(levelManager.getCurrentLevel().getPlayerSpawn());
+
 	}
 
 	@Override
