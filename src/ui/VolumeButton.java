@@ -1,11 +1,15 @@
 package ui;
-
+//Importamos las librerias y las constantes que vamos a usar en la clase VolumeButton
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import utilz.LoadSave;
 import static utilz.Constants.UI.VolumeButtons.*;
 
+/**
+ * Comienzo de la clase VolumeButton hija de PauseButton
+ * @author Santiago
+ */
 public class VolumeButton extends PauseButton {
 
 	private BufferedImage[] imgs;
@@ -16,6 +20,13 @@ public class VolumeButton extends PauseButton {
 	private float floatValue = 0;
 
 
+	/**
+	 * Definimos el constructor de la clase
+	 * @param x es la posicion en x del boton
+	 * @param y es la posicion en y del boton
+	 * @param width es el ancho del boton
+	 * @param height es el alto del boton
+	 */
 	public VolumeButton(int x, int y, int width, int height) {
 		super(x + width / 2, y, VOLUME_WIDTH , height);
 		bounds.x -= VOLUME_WIDTH / 2;
@@ -27,6 +38,9 @@ public class VolumeButton extends PauseButton {
 		loadImgs();
 	}
 
+	/**
+	 * Definimos un metodo para cargar las imagenes del boton
+	 */
 	private void loadImgs() {
 		BufferedImage temp = LoadSave.GetSpriteAtlas(LoadSave.VOLUME_BUTTONS);
 		imgs = new BufferedImage[3];
@@ -37,6 +51,9 @@ public class VolumeButton extends PauseButton {
 		
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el boton
+	 */
 	public void update() {
 		index = 0;
 		if (mouseOver)
@@ -46,6 +63,10 @@ public class VolumeButton extends PauseButton {
 
 	}
 
+	/**
+	 * Definimos un metodo para dibujar el boton
+	 * @param g es el grafico para poder dibujar
+	 */
 	public void draw(Graphics g) {
 
 		g.drawImage(slider, x, y, width, height, null);
@@ -53,6 +74,10 @@ public class VolumeButton extends PauseButton {
 
 	}
 
+	/**
+	 * Definimos un metodo para cambiar el valor de la posicion en x
+	 * @param x el valor de la nueva posicion de x
+	 */
 	public void changeX(int x) {
 		if (x < minX)
 			buttonX = minX;
@@ -66,6 +91,9 @@ public class VolumeButton extends PauseButton {
 
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el volumen real que suena en el juego
+	 */
 	private void updateFloatValue() {
 		float range = maxX - minX;
 		float value = buttonX - minX;
@@ -74,27 +102,42 @@ public class VolumeButton extends PauseButton {
 	}
 
 
+	/**
+	 * Definimos un metodo que resetea los booleanos de mouseOver y mousePressed a false
+	 */
 	public void resetBools() {
 		mouseOver = false;
 		mousePressed = false;
 	}
 
-	public boolean isMouseOver() {
-		return mouseOver;
-	}
-
+	/**
+	 * Definimos un setter para mouseOver
+	 * @param mouseOver el valor booleano de mouseOver
+	 */
 	public void setMouseOver(boolean mouseOver) {
 		this.mouseOver = mouseOver;
 	}
 
+	/**
+	 * Definimos un getter para el valor de mousePressed
+	 * @return el valor booleano de mousePressed
+	 */
 	public boolean getMousePressed() {
 		return mousePressed;
 	}
 
+	/**
+	 * Definimos un setter para mousePressed
+	 * @param mousePressed el valor de mousePressed
+	 */
 	public void setMousePressed(boolean mousePressed) {
 		this.mousePressed = mousePressed;
 	}
 
+	/**
+	 * Definimos un getter para floatValue
+	 * @return el valor de floatValue
+	 */
 	public float getFloatValue() {
 		return floatValue;
 	}

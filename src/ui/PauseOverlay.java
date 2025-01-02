@@ -1,5 +1,6 @@
 package ui;
 
+//Importamos las librerias y constantes que vamos a usar en la clase
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -10,6 +11,10 @@ import main.Game;
 import utilz.LoadSave;
 import static utilz.Constants.UI.URMButtons.*;
 
+/**
+ * Comienzo de la clase PauseOverlay
+ * @author Santiago
+ */
 public class PauseOverlay {
 
 	private Playing playing;
@@ -18,6 +23,10 @@ public class PauseOverlay {
 	private AudioOptions audioOptions;
 	private UrmButton menuB, replayB, unpauseB;
 
+	/**
+	 * Definimos el constructor de la clase
+	 * @param playing es el estado de juego
+	 */
 	public PauseOverlay(Playing playing) {
 		this.playing = playing;
 		loadBackground();
@@ -25,6 +34,9 @@ public class PauseOverlay {
 		createUrmButtons();
 	}
 
+	/**
+	 * Definimos un metodo para crear los botones
+	 */
 	private void createUrmButtons() {
 		int menuX = (int) (313 * Game.SCALE);
 		int replayX = (int) (387 * Game.SCALE);
@@ -36,6 +48,9 @@ public class PauseOverlay {
 		unpauseB = new UrmButton(unpauseX, bY, URM_SIZE, URM_SIZE, 0);
 	}
 
+	/**
+	 * Definimos un metodo para cargar el background del menu de pausa
+	 */
 	private void loadBackground() {
 		backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.PAUSE_BACKGROUND);
 		bgW = (int) (backgroundImg.getWidth() * Game.SCALE);
@@ -44,6 +59,9 @@ public class PauseOverlay {
 		bgY = (int) (25 * Game.SCALE);
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el menu de pausa
+	 */
 	public void update() {
 
 		menuB.update();
@@ -54,6 +72,10 @@ public class PauseOverlay {
 
 	}
 
+	/**
+	 * Definimos un metodo para dibujar el menu de pausa
+	 * @param g es el grafico para poder dibujar
+	 */
 	public void draw(Graphics g) {
 		// Background
 		g.drawImage(backgroundImg, bgX, bgY, bgW, bgH, null);
@@ -67,10 +89,18 @@ public class PauseOverlay {
 
 	}
 
+	/**
+	 * Definimos un metodo para detectar cuando se arrastra el raton
+	 * @param e es el evento de arrastrar el raton
+	 */
 	public void mouseDragged(MouseEvent e) {
 		audioOptions.mouseDragged(e);
 	}
 
+	/**
+	 * Definimos un metodo para detectar si se presiona el raton
+	 * @param e es el evento de presionar el raton
+	 */
 	public void mousePressed(MouseEvent e) {
 		if (isIn(e, menuB))
 			menuB.setMousePressed(true);
@@ -82,6 +112,10 @@ public class PauseOverlay {
 			audioOptions.mousePressed(e);
 	}
 
+	/**
+	 * Definimos un metodo para detectar si se suelta el raton
+	 * @param e es el evento de soltar el raton
+ 	 */
 	public void mouseReleased(MouseEvent e) {
 		if (isIn(e, menuB)) {
 			if (menuB.getMousePressed()) {
@@ -106,6 +140,10 @@ public class PauseOverlay {
 
 	}
 
+	/**
+	 * Definimos un metodo para mover el raton
+	 * @param e es el evento de mover el raton
+	 */
 	public void mouseMoved(MouseEvent e) {
 		menuB.setMouseOver(false);
 		replayB.setMouseOver(false);
@@ -121,6 +159,12 @@ public class PauseOverlay {
 			audioOptions.mouseMoved(e);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si el raton esta dentro del boton de pausa
+	 * @param e es el evento del raton
+	 * @param b es el boton de pausa
+	 * @return true si el raton esta dentro del boton, false si no esta dentro del boton
+	 */
 	private boolean isIn(MouseEvent e, PauseButton b) {
 		return b.getBounds().contains(e.getX(), e.getY());
 	}

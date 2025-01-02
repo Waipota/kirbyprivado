@@ -1,5 +1,6 @@
 package levels;
 
+//Importamos las librerias y constantes que vamos a usar en la clase Level Manager
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -7,6 +8,10 @@ import java.util.ArrayList;
 import main.Game;
 import utilz.LoadSave;
 
+/**
+ * Comienzo de la clase LevelManager
+ * @author Santiago
+ */
 public class LevelManager {
 
 	private Game game;
@@ -15,6 +20,10 @@ public class LevelManager {
 	private ArrayList<Level> levels;
 	private int lvlIndex = 0, aniTick, aniIndex;
 
+	/**
+	 * Definimos el constructor de la clase LevelManager
+	 * @param game es el juego
+	 */
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
@@ -23,6 +32,9 @@ public class LevelManager {
 		buildAllLevels();
 	}
 
+	/**
+	 * Definimos un metodo para crear el agua
+	 */
 	private void createWater() {
 		waterSprite = new BufferedImage[5];
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.WATER_TOP);
@@ -31,6 +43,9 @@ public class LevelManager {
 		waterSprite[4] = LoadSave.GetSpriteAtlas(LoadSave.WATER_BOTTOM);
 	}
 
+	/**
+	 * Definimos un metodo para cargar el siguiente nivel despues de que se completa uno
+	 */
 	public void loadNextLevel() {
 		Level newLevel = levels.get(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
@@ -39,12 +54,18 @@ public class LevelManager {
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
 	}
 
+	/**
+	 * Definimos un metodo para construir todos los niveles
+	 */
 	private void buildAllLevels() {
 		BufferedImage[] allLevels = LoadSave.GetAllLevels();
 		for (BufferedImage img : allLevels)
 			levels.add(new Level(img));
 	}
 
+	/**
+	 * Definimos un metodo para crear el nivel con la imagen de levelatlas
+	 */
 	private void importOutsideSprites() {
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
 		levelSprite = new BufferedImage[48];
@@ -55,6 +76,11 @@ public class LevelManager {
 			}
 	}
 
+	/**
+	 * Definimos un metodo para dibujar los niveles
+	 * @param g es el grafico para poder dibujar
+	 * @param lvlOffset es el offset del nivel en el cual esta el jugador
+	 */
 	public void draw(Graphics g, int lvlOffset) {
 		for (int j = 0; j < Game.TILES_IN_HEIGHT; j++)
 			for (int i = 0; i < levels.get(lvlIndex).getLevelData()[0].length; i++) {
@@ -70,10 +96,16 @@ public class LevelManager {
 			}
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el levelManager
+	 */
 	public void update() {
 		updateWaterAnimation();
 	}
 
+	/**
+	 * Definimos un metodo para actualizar la animacion del agua
+	 */
 	private void updateWaterAnimation() {
 		aniTick++;
 		if (aniTick >= 40) {
@@ -85,18 +117,34 @@ public class LevelManager {
 		}
 	}
 
+	/**
+	 * Definimos un getter para obtener el actual nivel en el cual esta el jugador
+	 * @return el nivel actual en el que esta el jugador
+	 */
 	public Level getCurrentLevel() {
 		return levels.get(lvlIndex);
 	}
 
+	/**
+	 * Definimos un getter para obtener la cantidad de niveles
+	 * @return la cantidad de niveles
+	 */
 	public int getAmountOfLevels() {
 		return levels.size();
 	}
 
+	/**
+	 * Definimos un getter para obtener el indice del nivel en el cual esta el jugador
+	 * @return el indice del nivel actual en el que esta el jugador
+	 */
 	public int getLevelIndex() {
 		return lvlIndex;
 	}
 
+	/**
+	 * Definimos un setter para setear el indice del nivel en el cual esta el jugador
+	 * @param lvlIndex es el indice del nivel en el cual esta el jugador
+	 */
 	public void setLevelIndex(int lvlIndex) {
 		this.lvlIndex = lvlIndex;
 	}

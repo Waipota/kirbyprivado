@@ -1,12 +1,23 @@
 package objects;
 
+//Importamos las librerias que vamos a usar en la clase potion
 import main.Game;
 
+/**
+ * Comienzo de la clase Potion que representa una pocion en el juego, es hija de la clase GameObject
+ * @author Santiago
+ */
 public class Potion extends GameObject {
 
     private float hoverOffset;
     private int maxHoverOffset, hoverDir = 1;
 
+    /**
+     * Definimos el constructor de la clase Potion
+     * @param x es la coordenada en x de la pocion
+     * @param y es la coordeanda en y de la pocion
+     * @param objType es el tipo de objeto
+     */
     public Potion(int x, int y, int objType) {
         super(x, y, objType);
         doAnimation = true;
@@ -19,11 +30,17 @@ public class Potion extends GameObject {
         maxHoverOffset = (int) (10 * Game.SCALE);
     }
 
+    /**
+     * Definimos un metodo para actualizar las pociones
+     */
     public void update() {
         updateAnimationTick();
         updateHover();
     }
 
+    /**
+     * Definimos un metodo para hacer el efecto de que las pociones se mueven
+     */
     private void updateHover() {
         hoverOffset += (0.075f * Game.SCALE * hoverDir);
 

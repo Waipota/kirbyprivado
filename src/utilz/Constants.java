@@ -1,12 +1,20 @@
 package utilz;
 
+//Importamos las librerias que vamos a usar en la clase Constants
 import main.Game;
 
+/**
+ * Comienzo de la clase Constants que es una clase que contiene todas las constantes que se van a usar en el programa
+ * @author Santiago
+ */
 public class Constants {
 
 	public static final float GRAVITY = 0.04f * Game.SCALE;
 	public static final int ANI_SPEED = 25;
 
+	/**
+	 * Definimos la clase interna dialogue que representa el dialogo que muestran los enemigos
+	 */
 	public static class Dialogue {
 		public static final int QUESTION = 0;
 		public static final int EXCLAMATION = 1;
@@ -14,6 +22,11 @@ public class Constants {
 		public static final int DIALOGUE_WIDTH = (int) (14 * Game.SCALE);
 		public static final int DIALOGUE_HEIGHT = (int) (12 * Game.SCALE);
 
+		/**
+		 * Definimos un metodo para saber la cantidad de sprites dependiendo del dialogo
+		 * @param type es el tipo de dialogo
+		 * @return la cantidad de sprites dependiendo del dialogo
+		 */
 		public static int GetSpriteAmount(int type) {
 			switch (type) {
 				case QUESTION, EXCLAMATION:
@@ -24,6 +37,9 @@ public class Constants {
 		}
 	}
 
+	/**
+	 * Definimos la clase interna de Projectiles que tiene todas las constantes de los proyectiles
+	 */
 	public static class Projectiles {
 		public static final int CANNON_BALL_DEFAULT_WIDTH = 15;
 		public static final int CANNON_BALL_DEFAULT_HEIGHT = 15;
@@ -33,6 +49,9 @@ public class Constants {
 		public static final float SPEED = 0.75f * Game.SCALE;
 	}
 
+	/**
+	 * Definimos la clase interna de objectconstants que contiene todas las constantes de los objetos, ya sean pociones etc
+	 */
 	public static class ObjectConstants {
 
 		public static final int RED_POTION = 0;
@@ -69,6 +88,11 @@ public class Constants {
 		public static final int CANNON_WIDTH = (int) (CANNON_WIDTH_DEFAULT * Game.SCALE);
 		public static final int CANNON_HEIGHT = (int) (CANNON_HEIGHT_DEFAULT * Game.SCALE);
 
+		/**
+		 * Definimo un metodo para obtener la cantidad de sprites que tenga un objeto
+		 * @param object_type es el tipo de objeto
+		 * @return la cantidad de sprites que tenga el objeto
+		 */
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {
 				case RED_POTION, BLUE_POTION:

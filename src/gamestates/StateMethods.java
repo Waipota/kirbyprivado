@@ -1,9 +1,13 @@
 package gamestates;
-
+//Importamos las librerias que vamos a usar en la interfaz StateMethods
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * Comienzo de la interfaz de StateMethods
+ * @author Santiago
+ */
 public interface StateMethods {
 	public void update();
 

@@ -1,5 +1,6 @@
 package inputs;
 
+//Importamos las librerias y las constantes que vamos a usar en la clase de mouseInputs
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -7,14 +8,26 @@ import java.awt.event.MouseMotionListener;
 import gamestates.GameState;
 import main.GamePanel;
 
+/**
+ * Comienzo de la clase MouseInputs que detecta las entradas del raton, la clase implementa el mouseListener y el mouseMotionListener
+ * @author Santiago
+ */
 public class MouseInputs implements MouseListener, MouseMotionListener {
 
     private GamePanel gamePanel;
 
+    /**
+     * Definimos el constructor de la clase MouseInputs
+     * @param gamePanel es el panel en el que esta todo el juego
+     */
     public MouseInputs(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
     }
 
+    /**
+     * Definimos un metodo para detectar si se dragea el raton
+     * @param e es el evento de dragar el raton
+     */
     @SuppressWarnings("incomplete-switch")
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -24,6 +37,10 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Definimos el metodo para detectar si se movio el raton
+     * @param e es el evento de move el raton
+     */
     @SuppressWarnings("incomplete-switch")
     @Override
     public void mouseMoved(MouseEvent e) {
@@ -35,6 +52,10 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Definimos un metodo para detectar si se clickeo el raton
+     * @param e es el evento de clickear el raton
+     */
     @SuppressWarnings("incomplete-switch")
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -43,6 +64,10 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Definimos un metodo para detectar si se ha presionado el raton
+     * @param e es el evento de presionar el raton
+     */
     @SuppressWarnings("incomplete-switch")
     @Override
     public void mousePressed(MouseEvent e) {
@@ -54,6 +79,10 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Definimos un metodo para detectar si ha soltado el raton
+     * @param e es el evento de soltar el raton
+     */
     @SuppressWarnings("incomplete-switch")
     @Override
     public void mouseReleased(MouseEvent e) {
@@ -65,11 +94,19 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
         }
     }
 
+    /**
+     * Definimos un metodo para detectar si se ha entrado al raton, no se usa en el programa
+     * @param e es el evento de entrar al raton
+     */
     @Override
     public void mouseEntered(MouseEvent e) {
         // Not In use
     }
 
+    /**
+     * Definimos un metodo para detectar si se ha salido del raton
+     * @param e es el evento de salir del raton
+     */
     @Override
     public void mouseExited(MouseEvent e) {
         // Not In use

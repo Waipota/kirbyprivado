@@ -1,5 +1,6 @@
 package gamestates;
 
+//Importamos las librerias y las constantes que se van a usar en la clase de playing
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -26,6 +27,10 @@ import effects.Rain;
 import static utilz.Constants.Environment.*;
 import static utilz.Constants.Dialogue.*;
 
+/**
+ * Comienzo de la clase Playing que representa el estado de jugar el juego como tal, hija de state y que implementa la interfaz de StateMethods
+ * @author Santiago
+ */
 public class Playing extends State implements StateMethods {
 
 	private Player player;
@@ -58,20 +63,14 @@ public class Playing extends State implements StateMethods {
 	private boolean playerDying;
 	private boolean drawRain;
 
-	// Ship will be decided to drawn here. It's just a cool addition to the game
-	// for the first level. Hinting on that the player arrived with the boat.
-
-	// If you would like to have it on more levels, add a value for objects when
-	// creating the level from lvlImgs. Just like any other object.
-
-	// Then play around with position values so it looks correct depending on where
-	// you want
-	// it.
-
 	private boolean drawShip = true;
 	private int shipAni, shipTick, shipDir = 1;
 	private float shipHeightDelta, shipHeightChange = 0.05f * Game.SCALE;
 
+	/**
+	 * Definimos el constructor de la clase playing
+	 * @param game es la instancia del juego
+	 */
 	public Playing(Game game) {
 		super(game);
 		initClasses();
@@ -94,13 +93,11 @@ public class Playing extends State implements StateMethods {
 		setDrawRainBoolean();
 	}
 
+	/**
+	 * Definimos un metodo para cargar los dialogos de los enemigos
+	 */
 	private void loadDialogue() {
 		loadDialogueImgs();
-
-		// Load dialogue array with premade objects, that gets activated when needed.
-		// This is a simple
-		// way of avoiding ConcurrentModificationException error. (Adding to a list that
-		// is being looped through.
 
 		for (int i = 0; i < 10; i++)
 			dialogEffects.add(new DialogueEffect(0, 0, EXCLAMATION));
@@ -111,6 +108,9 @@ public class Playing extends State implements StateMethods {
 			de.deactive();
 	}
 
+	/**
+	 * Definimos un metodo para cargas las imagenes de los dialogos de los enemigos
+	 */
 	private void loadDialogueImgs() {
 		BufferedImage qtemp = LoadSave.GetSpriteAtlas(LoadSave.QUESTION_ATLAS);
 		questionImgs = new BufferedImage[5];
@@ -123,6 +123,9 @@ public class Playing extends State implements StateMethods {
 			exclamationImgs[i] = etemp.getSubimage(i * 14, 0, 14, 12);
 	}
 
+	/**
+	 * Definimos un metodo para cargar el siguiente nivel luego de que se completa uno
+	 */
 	public void loadNextLevel() {
 		levelManager.setLevelIndex(levelManager.getLevelIndex() + 1);
 		levelManager.loadNextLevel();
@@ -131,15 +134,24 @@ public class Playing extends State implements StateMethods {
 		drawShip = false;
 	}
 
+	/**
+	 * Definimos un metodo para cargar el inicio de un nivel, cambia dependiendo del nivel en el que esta el jugador
+	 */
 	private void loadStartLevel() {
 		enemyManager.loadEnemies(levelManager.getCurrentLevel());
 		objectManager.loadObjects(levelManager.getCurrentLevel());
 	}
 
+	/**
+	 * Definimos un metodo para calcular el offset del nivel
+	 */
 	private void calcLvlOffset() {
 		maxLvlOffsetX = levelManager.getCurrentLevel().getLvlOffset();
 	}
 
+	/**
+	 * Definimos un metodo para iniciar todas las clases que se van a usar en la clase de Playing
+	 */
 	private void initClasses() {
 		levelManager = new LevelManager(game);
 		enemyManager = new EnemyManager(this);
@@ -153,6 +165,10 @@ public class Playing extends State implements StateMethods {
 		rain = new Rain();
 	}
 
+	/**
+	 * Definimos un metodo para setear el personaje que se selecciono con el cual jugar
+	 * @param pc es el personaje que se selecciono para jugar
+	 */
 	public void setPlayerCharacter(PlayerCharacter pc) {
 		player = new Player(pc, this);
 		player.loadLvlData(levelManager.getCurrentLevel().getLevelData());
@@ -160,6 +176,9 @@ public class Playing extends State implements StateMethods {
 
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el estado de juego, actualiza todos los efectos, enemigos y los propios jugadores
+	 */
 	@Override
 	public void update() {
 		if (paused)
@@ -186,6 +205,9 @@ public class Playing extends State implements StateMethods {
 		}
 	}
 
+	/**
+	 * Definimos un metodo para actualizar la animacion del barco en el primer nivel
+	 */
 	private void updateShipAni() {
 		shipTick++;
 		if (shipTick >= 35) {
@@ -205,12 +227,20 @@ public class Playing extends State implements StateMethods {
 
 	}
 
+	/**
+	 * Definimos un metodo para actualizar los dialogos, dependiendo del nivel en el que estemos
+	 */
 	private void updateDialogue() {
 		for (DialogueEffect de : dialogEffects)
 			if (de.isActive())
 				de.update();
 	}
 
+	/**
+	 * Definimos un metodo para dibujar los dialogos
+	 * @param g es el grafico para poder dibujar
+	 * @param xLvlOffset es el offset del nivel en el que este el jugador, cambia dependiendo del nivel en el que estemos
+	 */
 	private void drawDialogue(Graphics g, int xLvlOffset) {
 		for (DialogueEffect de : dialogEffects)
 			if (de.isActive()) {
@@ -221,6 +251,12 @@ public class Playing extends State implements StateMethods {
 			}
 	}
 
+	/**
+	 * Definimos un metodo para añadir el dialogo
+	 * @param x es la coordenada en x en donde quiere aparecer el dialogo
+	 * @param y es la coordenada en y en donde quiere aparecer el dialogo
+	 * @param type es el tipo de dialogo que se desea mostrar
+	 */
 	public void addDialogue(int x, int y, int type) {
 		// Not adding a new one, we are recycling. #ThinkGreen lol
 		dialogEffects.add(new DialogueEffect(x, y - (int) (Game.SCALE * 15), type));
@@ -232,6 +268,9 @@ public class Playing extends State implements StateMethods {
 				}
 	}
 
+	/**
+	 * Definimos un metodo para verificar si el jugador esta en los bordes determinados en caso de que no se cambia el offset para mover la camara
+	 */
 	private void checkCloseToBorder() {
 		int playerX = (int) player.getHitbox().x;
 		int diff = playerX - xLvlOffset;
@@ -244,6 +283,10 @@ public class Playing extends State implements StateMethods {
 		xLvlOffset = Math.max(Math.min(xLvlOffset, maxLvlOffsetX), 0);
 	}
 
+	/**
+	 * Definimos un metodo para dibujar el estado de juego
+	 * @param g es el grafico para poder dibujar el juego, desde la lluvia, barco, jugadores, etc
+	 */
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
@@ -275,6 +318,10 @@ public class Playing extends State implements StateMethods {
 
 	}
 
+	/**
+	 * Definimos un metodo para dibujar las nubes
+	 * @param g es el grafico para poder dibujar
+	 */
 	private void drawClouds(Graphics g) {
 		for (int i = 0; i < 4; i++)
 			g.drawImage(bigCloud, i * BIG_CLOUD_WIDTH - (int) (xLvlOffset * 0.3), (int) (204 * Game.SCALE), BIG_CLOUD_WIDTH, BIG_CLOUD_HEIGHT, null);
@@ -283,14 +330,23 @@ public class Playing extends State implements StateMethods {
 			g.drawImage(smallCloud, SMALL_CLOUD_WIDTH * 4 * i - (int) (xLvlOffset * 0.7), smallCloudsPos[i], SMALL_CLOUD_WIDTH, SMALL_CLOUD_HEIGHT, null);
 	}
 
+	/**
+	 * Definimos un metodo para setear que se ha terminado un nivel
+	 */
 	public void setGameCompleted() {
 		gameCompleted = true;
 	}
 
+	/**
+	 * Definimos un metodo reset el valor del nivel completado
+	 */
 	public void resetGameCompleted() {
 		gameCompleted = false;
 	}
 
+	/**
+	 * Definimos un metdodo para resetear todos los valores de la clase playing
+	 */
 	public void resetAll() {
 		gameOver = false;
 		paused = false;
@@ -306,32 +362,58 @@ public class Playing extends State implements StateMethods {
 		dialogEffects.clear();
 	}
 
+	/**
+	 * Definimos un metodo para determinar si en un nivel puede llover o no, dependiendo del numero random que se genere
+	 */
 	private void setDrawRainBoolean() {
-		// This method makes it rain 20% of the time you load a level.
 		if (rnd.nextFloat() >= 0.8f)
 			drawRain = true;
 	}
 
+	/**
+	 * Definimos un metodo para terminar el juego
+	 * @param gameOver es el valor booleano de si se termino el juego o no
+	 */
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
 
+	/**
+	 * Definimos un metodo para checkear si el jugador le golpeo a una caja
+	 * @param attackBox es la attackbox del jugador
+	 */
 	public void checkObjectHit(Rectangle2D.Float attackBox) {
 		objectManager.checkObjectHit(attackBox);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si el ataque del jugador le ha dado a un enemigo
+	 * @param attackBox es la attackbox del jugador
+	 */
 	public void checkEnemyHit(Rectangle2D.Float attackBox) {
 		enemyManager.checkEnemyHit(attackBox);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si un jugador toco una pocion
+	 * @param hitbox es la hitbox del jugador
+	 */
 	public void checkPotionTouched(Rectangle2D.Float hitbox) {
 		objectManager.checkObjectTouched(hitbox);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si el jugador toco una spike
+	 * @param p es la instancia del jugador
+	 */
 	public void checkSpikesTouched(Player p) {
 		objectManager.checkSpikesTouched(p);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si se ha clickeado el raton
+	 * @param e es el evento de clickear el raton
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (!gameOver) {
@@ -342,6 +424,10 @@ public class Playing extends State implements StateMethods {
 		}
 	}
 
+	/**
+	 * Definimos un metodo para determinar si se ha presionado una tecla
+	 * @param e es el evento de presionar una tecla
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (!gameOver && !gameCompleted && !lvlCompleted)
@@ -367,6 +453,10 @@ public class Playing extends State implements StateMethods {
 			}
 	}
 
+	/**
+	 * Definimos un metodo para detectar si se ha dejado de presionar una tecla
+	 * @param e es el evento de dejar de presionar una tecla
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if (!gameOver && !gameCompleted && !lvlCompleted)
@@ -383,12 +473,20 @@ public class Playing extends State implements StateMethods {
 			}
 	}
 
+	/**
+	 * Definimos un metodo para detectar si ha arrastrado el raton
+	 * @param e es el evento de arrastrar el raton
+	 */
 	public void mouseDragged(MouseEvent e) {
 		if (!gameOver && !gameCompleted && !lvlCompleted)
 			if (paused)
 				pauseOverlay.mouseDragged(e);
 	}
 
+	/**
+	 * Definimos un metodo para determinar si se ha presionado el raton
+	 * @param e es el evento de presionar el raton
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if (gameOver)
@@ -402,6 +500,10 @@ public class Playing extends State implements StateMethods {
 
 	}
 
+	/**
+	 * Definimos un metodo para detectar si se ha soltado el raton
+	 * @param e es el evento de soltar el raton
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (gameOver)
@@ -414,6 +516,10 @@ public class Playing extends State implements StateMethods {
 			gameCompletedOverlay.mouseReleased(e);
 	}
 
+	/**
+	 * Definimos un metodo para detectar si se ha movido el raton
+	 * @param e es el evento de mover el raton
+	 */
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if (gameOver)
@@ -426,6 +532,10 @@ public class Playing extends State implements StateMethods {
 			gameCompletedOverlay.mouseMoved(e);
 	}
 
+	/**
+	 * Definimos un metodo para manejar el estado del juego cuando se completa un nivel, reproduce el efecto de completar un nivel y despues carga el siguiente nivel
+	 * @param levelCompleted es el booleano de si se ha completado un nivel
+	 */
 	public void setLevelCompleted(boolean levelCompleted) {
 		game.getAudioPlayer().lvlCompleted();
 		if (levelManager.getLevelIndex() + 1 >= levelManager.getAmountOfLevels()) {
@@ -439,34 +549,64 @@ public class Playing extends State implements StateMethods {
 		this.lvlCompleted = levelCompleted;
 	}
 
+	/**
+	 * Definimos un setter del offset del nivel
+	 * @param lvlOffset es el valor del offset del nivel
+	 */
 	public void setMaxLvlOffset(int lvlOffset) {
 		this.maxLvlOffsetX = lvlOffset;
 	}
 
+	/**
+	 * Definimos un metodo para quitar la pausa en un nivel
+	 */
 	public void unpauseGame() {
 		paused = false;
 	}
 
+	/**
+	 * Definimos un metodo para cuando se sale de la ventana del juego, para que se pare el juego
+	 */
 	public void windowFocusLost() {
 		player.resetDirBooleans();
 	}
 
+	/**
+	 * Definimos un getter para obtener el jugador que esta en el nivel
+	 * @return
+	 */
 	public Player getPlayer() {
 		return player;
 	}
 
+	/**
+	 * Definimos un getter para obtener el manager de los enemigos
+	 * @return el manager de los enemigos
+	 */
 	public EnemyManager getEnemyManager() {
 		return enemyManager;
 	}
 
+	/**
+	 * Definimos un getter para obtener el manager de los objetos del nivel
+	 * @return el manager de los objetos
+	 */
 	public ObjectManager getObjectManager() {
 		return objectManager;
 	}
 
+	/**
+	 * Definimos un getter del manager de los niveles
+	 * @return el manager de los niveles
+	 */
 	public LevelManager getLevelManager() {
 		return levelManager;
 	}
 
+	/**
+	 * Definimos un setter para el booleano de cuando muere un jugador
+	 * @param playerDying el booleano de si esta muerto o no el jugador
+	 */
 	public void setPlayerDying(boolean playerDying) {
 		this.playerDying = playerDying;
 	}

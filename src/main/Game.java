@@ -1,5 +1,6 @@
 package main;
 
+//Importamos las librerias y las constantes que se van a usar en la clase de Game
 import java.awt.Graphics;
 
 import audio.AudioPlayer;
@@ -7,6 +8,10 @@ import entities.Player;
 import gamestates.*;
 import ui.AudioOptions;
 
+/**
+ * Comienzo de la clase Game que implementa runnable para poder tener el loop del juego
+ * @author Santiago
+ */
 public class Game implements Runnable {
 
 	private GamePanel gamePanel;
@@ -31,6 +36,9 @@ public class Game implements Runnable {
 
 	private final boolean SHOW_FPS_UPS = true;
 
+	/**
+	 * Definimos el constructor de la clase Game
+	 */
 	public Game() {
 		initClasses();
 		gamePanel = new GamePanel(this);
@@ -39,6 +47,9 @@ public class Game implements Runnable {
 		startGameLoop();
 	}
 
+	/**
+	 * Definimos un metodo para iniciar las clases que van a tener el juego que son el menu de audio, el audioplayer, el menu , el estado de playing, etc
+	 */
 	private void initClasses() {
 		audioOptions = new AudioOptions(this);
 		audioPlayer = new AudioPlayer();
@@ -49,11 +60,17 @@ public class Game implements Runnable {
 		gameOptions = new GameOptions(this);
 	}
 
+	/**
+	 * Definimos un metodo para iniciar el game loop, usando threads
+	 */
 	private void startGameLoop() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 
+	/**
+	 * Definimos un metodo para actualizar el juego
+	 */
 	public void update() {
 		switch (GameState.state) {
 			case MENU -> menu.update();
@@ -65,6 +82,10 @@ public class Game implements Runnable {
 		}
 	}
 
+	/**
+	 * Definimos un metodo para dibujar el juego, dependiendo del estado de juego en el cual estemos
+	 * @param g es el grafico para poder dibujar
+	 */
 	@SuppressWarnings("incomplete-switch")
 	public void render(Graphics g) {
 		switch (GameState.state) {
@@ -76,6 +97,9 @@ public class Game implements Runnable {
 		}
 	}
 
+	/**
+	 * Definimos un metodo para poder ejecutar el ciclo principal del juego, manejando la logica de la actualizacion y renderizado a una tasa especifica de fotogramaas por segundo y actualizaciones por segundo
+	 */
 	@Override
 	public void run() {
 		double timePerFrame = 1000000000.0 / FPS_SET;
@@ -127,35 +151,66 @@ public class Game implements Runnable {
 		}
 	}
 
+	/**
+	 * Definimos un metodo para cuando se pierde el enfoque de la pantalla
+	 */
 	public void windowFocusLost() {
 		if (GameState.state == GameState.PLAYING)
 			playing.getPlayer().resetDirBooleans();
 	}
 
+	/**
+	 * Definimos un getter para obtener el menu del juego
+	 * @return el menu del juego
+	 */
 	public Menu getMenu() {
 		return menu;
 	}
 
+	/**
+	 * Definimos un getter para obtener el estado de juego de jugar el juego
+	 * @return el estado de jugar
+	 */
 	public Playing getPlaying() {
 		return playing;
 	}
 
+	/**
+	 * Definimos un getter para obtener los creditos del juego
+	 * @return los creditos del juego
+	 */
 	public Credits getCredits() {
 		return credits;
 	}
 
+	/**
+	 * Definimos un getter para obtener el menu de las opciones del juego
+	 * @return el menu de opciones
+	 */
 	public GameOptions getGameOptions() {
 		return gameOptions;
 	}
 
+	/**
+	 * Definimos un getter para obtener el menu de opciones de audio
+	 * @return el menu de opciones de audio
+	 */
 	public AudioOptions getAudioOptions() {
 		return audioOptions;
 	}
 
+	/**
+	 * Definimos un getter para obtener el audio player que es el que se encarga de reproducir el audio del juego al igual que los efectos
+	 * @return el audio player
+	 */
 	public AudioPlayer getAudioPlayer() {
 		return audioPlayer;
 	}
 
+	/**
+	 * Definimos un getter para obtener el menu de seleccion de personaje
+	 * @return el menu de seleccion de personaje
+	 */
 	public PlayerSelection getPlayerSelection() {
 		return playerSelection;
 
