@@ -91,7 +91,7 @@ public class Constants {
 		/**
 		 * Definimo un metodo para obtener la cantidad de sprites que tenga un objeto
 		 * @param object_type es el tipo de objeto
-		 * @return la cantidad de sprites que tenga el objeto
+		 * @return la cantidad de sprites que tenga el objeto, cambia dependiendo del objeto
 		 */
 		public static int GetSpriteAmount(int object_type) {
 			switch (object_type) {
@@ -105,6 +105,11 @@ public class Constants {
 			return 1;
 		}
 
+		/**
+		 * Definimos un metodo para obtener el offset del arbol, cambia dependiendo del arbol
+		 * @param treeType es el tipo de arbol
+		 * @return el valor del offset del arbol
+		 */
 		public static int GetTreeOffsetX(int treeType) {
 			switch (treeType) {
 				case TREE_ONE:
@@ -118,6 +123,11 @@ public class Constants {
 			return 0;
 		}
 
+		/**
+		 * Definimos un metodo para obtener el offset del arbol, cambia dependiendo del arbol
+		 * @param treeType es el tipo de arbol
+		 * @return el valor del offset del arbol
+		 */
 		public static int GetTreeOffsetY(int treeType) {
 
 			switch (treeType) {
@@ -130,6 +140,11 @@ public class Constants {
 
 		}
 
+		/**
+		 * Definimos un metodo para obtener el ancho de un arbol, cambia dependiendo del arbol
+		 * @param treeType es el tipo de arbol
+		 * @return el valor del ancho del arbol
+		 */
 		public static int GetTreeWidth(int treeType) {
 			switch (treeType) {
 				case TREE_ONE:
@@ -143,6 +158,11 @@ public class Constants {
 			return 0;
 		}
 
+		/**
+		 * Definimos un metodo para obtener el alto de un arbol, cambia dependiendo del arbol
+		 * @param treeType es el tipo de arbol
+		 * @return el valor de la altura del arbol  
+		 */
 		public static int GetTreeHeight(int treeType) {
 			switch (treeType) {
 				case TREE_ONE:
@@ -155,7 +175,14 @@ public class Constants {
 		}
 	}
 
+	/**
+	 * Definimos la clase de las constantes de los enemigos
+	 * @author Santiago
+	 */
 	public static class EnemyConstants {
+		/**
+		 * Definimos todas las constantes de todos los enemigos tanto los anchos y altos de los sprites como sus ataques vida etc
+		 */
 		public static final int CRABBY = 0;
 		public static final int PINKSTAR = 1;
 		public static final int SHARK = 2;
@@ -187,6 +214,12 @@ public class Constants {
 		public static final int SHARK_DRAWOFFSET_X = (int) (8 * Game.SCALE);
 		public static final int SHARK_DRAWOFFSET_Y = (int) (6 * Game.SCALE);
 
+		/**
+		 * Definimos un metodo para obtener la cantidad de sprites de un enemigo, cambia dependiendo del enemigo
+		 * @param enemy_type es el tipo de enemigo
+		 * @param enemy_state es el estado del enemigo
+		 * @return el valor de la cantidad de sprites del enemigo
+		 */
 		public static int GetSpriteAmount(int enemy_type, int enemy_state) {
 			switch (enemy_state) {
 
@@ -212,6 +245,11 @@ public class Constants {
 
 		}
 
+		/**
+		 * Definimos un metodo para obtener el maximo de vida de un enemigo, cambia dependiendo del enemigo
+		 * @param enemy_type es el tipo de enemigo
+		 * @return el valor de la cantidad de vida del enemigo
+		 */
 		public static int GetMaxHealth(int enemy_type) {
 			switch (enemy_type) {
 				case CRABBY:
@@ -223,6 +261,11 @@ public class Constants {
 			}
 		}
 
+		/**
+		 * Definimos un metodo para obtener el daño de un enemigo, cambia dependiendo del enemigo
+		 * @param enemy_type es el tipo de enemigo
+		 * @return el valor del daño del enemigo, cambia dependiendo del enemigo
+		 */
 		public static int GetEnemyDmg(int enemy_type) {
 			switch (enemy_type) {
 				case CRABBY:
@@ -237,7 +280,14 @@ public class Constants {
 		}
 	}
 
+	/**
+	 * Definimos la clase en la que estan las constantes del ambiente del juego
+	 * @author Santiago
+	 */
 	public static class Environment {
+		/**
+		 * Definimos todas las constantes del ambiente del juego
+		 */
 		public static final int BIG_CLOUD_WIDTH_DEFAULT = 448;
 		public static final int BIG_CLOUD_HEIGHT_DEFAULT = 101;
 		public static final int SMALL_CLOUD_WIDTH_DEFAULT = 74;
@@ -249,26 +299,56 @@ public class Constants {
 		public static final int SMALL_CLOUD_HEIGHT = (int) (SMALL_CLOUD_HEIGHT_DEFAULT * Game.SCALE);
 	}
 
+	/**
+	 * Definimos la clase que guarda las constantes de todos los botones del juego
+	 * @author Santiago
+	 */
+
 	public static class UI {
+		/**
+		 * Definimos la clse interna para las constantes de los botones del juego
+		 * @author Santiago
+		 */
 		public static class Buttons {
+			/**
+			 * Definimos las constantes de los botones del juego
+			 */
 			public static final int B_WIDTH_DEFAULT = 140;
 			public static final int B_HEIGHT_DEFAULT = 56;
 			public static final int B_WIDTH = (int) (B_WIDTH_DEFAULT * Game.SCALE);
 			public static final int B_HEIGHT = (int) (B_HEIGHT_DEFAULT * Game.SCALE);
 		}
 
+		/**
+		 * Definimos la clase interna que contiene las constantes de los botones de pausa del juego
+		 * @author Santiago
+		 */
 		public static class PauseButtons {
 			public static final int SOUND_SIZE_DEFAULT = 42;
 			public static final int SOUND_SIZE = (int) (SOUND_SIZE_DEFAULT * Game.SCALE);
 		}
 
+		/**
+		 * Definimos la clase interna que contiene las constantes de los botones urm del juego
+		 * @author Santiago
+		 */
 		public static class URMButtons {
+			/**
+			 * Definimos las constantes de los botones urm del juego
+			 */
 			public static final int URM_DEFAULT_SIZE = 56;
 			public static final int URM_SIZE = (int) (URM_DEFAULT_SIZE * Game.SCALE);
 
 		}
 
+		/**
+		 * Definimos las constantes de los botones de volumen del juego
+		 * @author Santiago
+		 */
 		public static class VolumeButtons {
+			/**
+			 * Definimos las constantes de los botones de volumen del juego
+			 */
 			public static final int VOLUME_DEFAULT_WIDTH = 28;
 			public static final int VOLUME_DEFAULT_HEIGHT = 44;
 			public static final int SLIDER_DEFAULT_WIDTH = 215;
@@ -279,14 +359,28 @@ public class Constants {
 		}
 	}
 
+	/**
+	 * Definimos la clase interna de las constantes de las direccion del juego
+	 * @author Santiago
+	 */
 	public static class Directions {
+		/**
+		 * Definimos las constantes
+		 */
 		public static final int LEFT = 0;
 		public static final int UP = 1;
 		public static final int RIGHT = 2;
 		public static final int DOWN = 3;
 	}
 
+	/**
+	 * Definimos la clase interna de las constantes de los distintos estados del jugador
+	 * @author Santiago
+	 */
 	public static class PlayerConstants {
+		/**
+		 * Definimos las constantes del jugador
+		 */
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
 		public static final int JUMP = 2;

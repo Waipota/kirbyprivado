@@ -9,13 +9,13 @@ import main.Game.*;
 
 
 public enum PlayerCharacter {
-    PIRATE(5, 6, 3, 1, 3, 4, 8, 0, 1, 2, 3, 4, 5, 6,
-            LoadSave.PLAYER_PIRATE, 7, 8, 64, 40,
-            20, 27, 21, 4),
-    ORC(6, 8, 8, 8, 6, 4, 4, 0, 1, 1, 1, 2, 4, 5,
-            LoadSave.PLAYER_ORC, 6, 8, 100, 100,
-            13, 15, 44, 42),
-    KIRBY(4, 7, 2, 1, 7, 1, 1, 0, 1, 2, 3, 4, 5, 6,
+    PIRATE(3, 7, 6, 2, 2, 4, 4, 0, 1, 2, 3, 4, 5, 6,
+            LoadSave.PLAYER_PIRATE, 7, 7, 100, 100,
+            24, 24, 40, 38),
+    ORC(15, 8, 6, 3, 2, 3, 1, 0, 1, 2, 3, 4, 5, 6,
+            LoadSave.PLAYER_ORC, 7, 15, 100, 100,
+            24, 24,40 , 45),
+    KIRBY(7, 8, 3, 4, 3, 4, 2, 0, 1, 2, 3, 4, 5, 6,
             LoadSave.PLAYER_KIRBY, 7, 7, 100, 100,
             24 , 24, 40, 38),;
 
