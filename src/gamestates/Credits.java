@@ -15,10 +15,7 @@ import utilz.LoadSave;
  * @author Santiago
  */
 public class Credits extends State implements StateMethods {
-    private BufferedImage backgroundImg, creditsImg;
-    private int bgX, bgY, bgW, bgH;
-    private float bgYFloat;
-
+    private BufferedImage imgHelp, backGroundImg; //Definimos la imagen que vamos a mostrar en los creditos
     private ArrayList<ShowEntity> entitiesList;
 
     /**
@@ -27,25 +24,22 @@ public class Credits extends State implements StateMethods {
      */
     public Credits(Game game) {
         super(game);
-        backgroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG);
-        creditsImg = LoadSave.GetSpriteAtlas(LoadSave.CREDITS);
-        bgW = (int) (creditsImg.getWidth() * Game.SCALE);
-        bgH = (int) (creditsImg.getHeight() * Game.SCALE);
-        bgX = Game.GAME_WIDTH / 2 - bgW / 2;
-        bgY = Game.GAME_HEIGHT;
-        loadEntities();
+        imgHelp = LoadSave.GetSpriteAtlas(LoadSave.ACERCA);
+        backGroundImg = LoadSave.GetSpriteAtlas(LoadSave.MENU_BACKGROUND_IMG); //Cargamos la imagen de la explicacion sobre como jugar el juego
     }
 
     /**
      * Definimos un metodo para cargar las entidades que van a estar en los creditos
      */
+    /*
     private void loadEntities() {
         entitiesList = new ArrayList<>();
-        entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.PLAYER_PIRATE), 5, 64, 40), (int) (Game.GAME_WIDTH * 0.05), (int) (Game.GAME_HEIGHT * 0.8)));
         entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.CRABBY_SPRITE), 9, 72, 32), (int) (Game.GAME_WIDTH * 0.15), (int) (Game.GAME_HEIGHT * 0.75)));
         entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.PINKSTAR_ATLAS), 8, 34, 30), (int) (Game.GAME_WIDTH * 0.7), (int) (Game.GAME_HEIGHT * 0.75)));
         entitiesList.add(new ShowEntity(getIdleAni(LoadSave.GetSpriteAtlas(LoadSave.SHARK_ATLAS), 8, 34, 30), (int) (Game.GAME_WIDTH * 0.8), (int) (Game.GAME_HEIGHT * 0.8)));
     }
+
+*/
 
     /**
      * Definimos un metodo para obtener un arreglo de la animacion de cada personaje en su estado idle
@@ -54,7 +48,7 @@ public class Credits extends State implements StateMethods {
      * @param width es el ancho de cada sprite
      * @param height es el alto de cada sprite
      * @return el arreglo de sprites
-     */
+
     private BufferedImage[] getIdleAni(BufferedImage atlas, int spritesAmount, int width, int height) {
         BufferedImage[] arr = new BufferedImage[spritesAmount];
         for (int i = 0; i < spritesAmount; i++)
@@ -62,14 +56,20 @@ public class Credits extends State implements StateMethods {
         return arr;
     }
 
+    */
+
     /**
      * Definimos un metodo para actualizar los creditos
+
+
+    */
+
+    /**
+     * Definimos un metodo para actualizar los creditos pero no lo usamos
      */
     @Override
     public void update() {
-        bgYFloat -= 0.2f;
-        for (ShowEntity se : entitiesList)
-            se.update();
+
     }
 
     /**
@@ -78,12 +78,24 @@ public class Credits extends State implements StateMethods {
      */
     @Override
     public void draw(Graphics g) {
-        g.drawImage(backgroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
-        g.drawImage(creditsImg, bgX, (int) (bgY + bgYFloat), bgW, bgH, null);
+        // Obtén las dimensiones originales de la imagen
+        int originalWidth = imgHelp.getWidth(null);
+        int originalHeight = imgHelp.getHeight(null);
 
-        for (ShowEntity se : entitiesList)
-            se.draw(g);
+        // Calcula la relación de aspecto
+        float aspectRatio = (float) originalWidth / originalHeight;
+
+        // Define la nueva altura deseada (por ejemplo, la altura del juego)
+        int newHeight = Game.GAME_HEIGHT;
+
+        // Calcula el nuevo ancho manteniendo la relación de aspecto
+        int newWidth = (int) (newHeight * aspectRatio);
+
+        // Dibuja la imagen escalada
+        g.drawImage(backGroundImg, 0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT, null);
+        g.drawImage(imgHelp, 500, 0, newWidth, newHeight, null);
     }
+
 
     /**
      * Definimsos un metodo para detectar las teclas
@@ -92,7 +104,6 @@ public class Credits extends State implements StateMethods {
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            bgYFloat = 0;
             setGamestate(GameState.MENU);
         }
     }

@@ -18,9 +18,13 @@ public class LoadSave {
     /**
      * Constantes para la ruta de los archivos
      */
-    public static final String PLAYER_PIRATE = "player_pirate.png";
+    public static final String ACERCA = "acercaNuevo.png";
+    public static final String PLAYER_KIRBY1 = "player_kirby1.png";
+    public static final String PLAYER_KIRBY2 = "player_kirby2.png";
+    public static final String PLAYER_KIRBY3 = "player_kirby3.png";
     public static final String PLAYER_ORC = "player_orc.png";
-    public static final String PLAYER_KIRBY = "player_kirby.png";
+    public static final String PLAYER_SOLDIER = "player_soldier.png";
+    public static final String PLAYER_PIRATE = "player_pirate.png";
     public static final String LEVEL_ATLAS = "outside_sprites.png";
     public static final String MENU_BUTTONS = "button_atlas.png";
     public static final String MENU_BACKGROUND = "menu_background.png";

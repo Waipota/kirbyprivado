@@ -17,7 +17,8 @@ import main.Game;
 public class AudioOptions {
 
     private VolumeButton volumeButton;
-    private SoundButton musicButton, sfxButton;
+    private SoundButton musicButton;
+    private SoundButton sfxButton;
 
     private Game game;
 

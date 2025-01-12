@@ -45,11 +45,15 @@ public class PlayerSelection extends State implements StateMethods{
      * Definimos un metodo para cargar las animaciones de los personajes
      */
     private void loadCharAnimations(){
-        characterAnimations = new CharacterAnimation[3];
+        characterAnimations = new CharacterAnimation[6];
         int i = 0;
-        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.PIRATE);
-        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.KIRBY);
+        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.KIRBY1);
+        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.KIRBY2);
+        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.KIRBY3);
         characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.ORC);
+        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.SOLDIER);
+        characterAnimations[i++] = new CharacterAnimation(PlayerCharacter.PIRATE);
+
 
     }
 

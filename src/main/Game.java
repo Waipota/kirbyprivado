@@ -14,6 +14,11 @@ import ui.AudioOptions;
  */
 public class Game implements Runnable {
 
+	/**
+	 * Definimos los atributos de la clase y la instancia unica
+	 */
+
+	private static Game instance;
 	private GamePanel gamePanel;
 	private Thread gameThread;
 	private final int FPS_SET = 120;
@@ -34,17 +39,27 @@ public class Game implements Runnable {
 	public final static int GAME_WIDTH = TILES_SIZE * TILES_IN_WIDTH;
 	public final static int GAME_HEIGHT = TILES_SIZE * TILES_IN_HEIGHT;
 
-	private final boolean SHOW_FPS_UPS = true;
-
-	/**
+    /**
 	 * Definimos el constructor de la clase Game
 	 */
-	public Game() {
+	private Game() {
 		initClasses();
 		gamePanel = new GamePanel(this);
 		new GameWindow(gamePanel);
 		gamePanel.requestFocusInWindow();
 		startGameLoop();
+	}
+
+	/**
+	 * Definimos un metodo para obtener la instancia unica de la clase game
+	 * @return la instancia de la clase game
+	 */
+	public static Game getInstance() {
+		if (instance == null) {
+			instance = new Game();
+
+		}
+		return instance;
 	}
 
 	/**
@@ -138,15 +153,15 @@ public class Game implements Runnable {
 
 			}
 
-			if (SHOW_FPS_UPS)
-				if (System.currentTimeMillis() - lastCheck >= 1000) {
+            boolean SHOW_FPS_UPS = true;
+            if (System.currentTimeMillis() - lastCheck >= 1000) {
 
-					lastCheck = System.currentTimeMillis();
-					System.out.println("FPS: " + frames + " | UPS: " + updates);
-					frames = 0;
-					updates = 0;
+                lastCheck = System.currentTimeMillis();
+                System.out.println("FPS: " + frames + " | UPS: " + updates);
+                frames = 0;
+                updates = 0;
 
-				}
+            }
 
 		}
 	}
